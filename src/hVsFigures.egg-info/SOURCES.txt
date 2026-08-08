@@ -1,0 +1,8 @@
+pyproject.toml
+src/hVsFigures/__init__.py
+src/hVsFigures/config.py
+src/hVsFigures/plotting.py
+src/hVsFigures.egg-info/PKG-INFO
+src/hVsFigures.egg-info/SOURCES.txt
+src/hVsFigures.egg-info/dependency_links.txt
+src/hVsFigures.egg-info/top_level.txt

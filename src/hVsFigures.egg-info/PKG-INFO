@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: hVsFigures
+Version: 0.1.0
+Summary: Code for reproducing figures in the paper
+Requires-Python: >=3.10
