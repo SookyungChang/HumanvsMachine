@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from chainconsumer import Chain
 from itertools import permutations
-from hVsFigures.config import DATA_DIR, OUTPUT_DIR, Nspectra
+from hVmFigures.config import DATA_DIR, OUTPUT_DIR, Nspectra
 
 with open(DATA_DIR / f"ind_chains_Nspectra={Nspectra}.pkl", "rb") as f:
     chains = pickle.load(f)

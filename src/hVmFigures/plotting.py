@@ -3,7 +3,7 @@ from chainconsumer import Truth, Chain
 from chainconsumer.plotting import plot_contour, plot_truths
 from chainconsumer.plotter import get_artists_from_chains
 from chainconsumer.color_finder import colors
-from hVsFigures.config import dpi, r, alpha_list, sigmas, dpi
+from hVmFigures.config import dpi, r, alpha_list, sigmas, dpi
 
 def chain_plot_with_label(ax, chain_list, loc='lower left'):
     for i in range(len(chain_list)):

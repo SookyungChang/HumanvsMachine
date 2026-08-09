@@ -1,6 +1,6 @@
 import pickle
-from hVsFigures.plotting import plot_posterior
-from hVsFigures.config import DATA_DIR, OUTPUT_DIR, Nspectra, dpi
+from hVmFigures.plotting import plot_posterior
+from hVmFigures.config import DATA_DIR, OUTPUT_DIR, Nspectra, dpi
 
 with open(DATA_DIR / f"ind_chains_Nspectra={Nspectra}.pkl", "rb") as f:
     chains = pickle.load(f)
