@@ -15,3 +15,4 @@ alpha_list = [0.05, 0.1, 0.15, 0.3, 0.4]
 sigmas = [0,1,2]
 dpi = 300
 r = 0.9
+fontsize = 12
