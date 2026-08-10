@@ -1,6 +1,8 @@
 # HumanvsMachine
 
-A lightweight repository for reproducing figures and tables used in the paper Human vs. machine -- 1:3. Joint analysis of classical and ML-based summary statistics of the Lyman-α forest (https://arxiv.org/abs/2508.03264).
+A lightweight repository for reproducing figures and tables used in the paper:
+
+Human vs. machine -- 1:3. Joint analysis of classical and ML-based summary statistics of the Lyman-α forest (https://arxiv.org/abs/2508.03264).
 
 ## Project Overview
 
