@@ -22,3 +22,9 @@ data/
 
 # Local files
 .env
+
+# Explorations
+.notebooks/*
+
+# Test output
+.test_outputs/
