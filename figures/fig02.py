@@ -1,5 +1,5 @@
 import pickle
-from hVmFigures.plotting import plot_posterior
+from hVmFigures.plotting import plot_posteriors
 from hVmFigures.config import DATA_DIR, OUTPUT_DIR, Nspectra, dpi
 
 with open(DATA_DIR / f"ind_chains_Nspectra={Nspectra}.pkl", "rb") as f:
@@ -15,7 +15,7 @@ chain_info = [
 color_list = ['#ff7f0e', '#17becf','#1f77b4', '#9467bd', '#d62728']
 
 def main(name):
-    fig, _ = plot_posterior(chains, chain_info, color_list)
+    fig, _ = plot_posteriors(chains, chain_info, color_list)
     fig.savefig(OUTPUT_DIR / name, dpi=dpi, bbox_inches="tight")
     print(f"Figure saved to {OUTPUT_DIR / name}")
 
