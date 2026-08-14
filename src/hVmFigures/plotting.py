@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
-from chainconsumer import Truth, Chain
+from chainconsumer import Truth, Chain, ChainConsumer
 from chainconsumer.plotting import plot_contour, plot_truths
 from chainconsumer.plotter import get_artists_from_chains
 from chainconsumer.color_finder import colors
+import pandas as pd
 from hVmFigures.config import dpi, r, alpha_list, sigmas, dpi, fontsize
 import numpy as np
 
@@ -16,7 +17,7 @@ def chain_plot_with_label(ax, chain_list, loc='lower left'):
     for text, chain in zip(leg.get_texts(), chain_list):
         text.set_color(colors.format(chain.color))
 
-def plot_posterior(chains, chain_info, color_list, alpha_list=alpha_list, sigmas=sigmas):
+def plot_posteriors(chains, chain_info, color_list, alpha_list=alpha_list, sigmas=sigmas):
     chains_ALL = [
     Chain(
         samples=chains[key],
@@ -98,3 +99,15 @@ def plot_FoM_bar(chains, chain_info):
     axes.set_ylim(0,0.3)
 
     return fig, axes
+
+def sampler_plot(sampler, thin=1, kde = False, size = (5,5)):
+    tau = sampler.get_autocorr_time()
+    print(f'autocorr_time = {tau}')
+
+    reduced_chain = sampler.get_chain(discard = int(np.mean(tau * 3)), thin = thin, flat=True)
+
+    reduced_chain = pd.DataFrame(reduced_chain)
+    reduced_chain.columns = ['$T_0$ [K]', 'γ']
+    c = ChainConsumer()
+    c.add_chain(Chain(samples=reduced_chain, name = 'Posterior'))
+    fig = c.plotter.plot(figsize = size)
