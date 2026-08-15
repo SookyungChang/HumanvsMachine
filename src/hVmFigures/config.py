@@ -20,3 +20,4 @@ fontsize = 12
 
 # Inference settings
 tem_gam = np.load(DATA_DIR / "tem_gam.npy") # thermal parameter list (T0, gamma) of 100 simulations
+Niter = 30000
