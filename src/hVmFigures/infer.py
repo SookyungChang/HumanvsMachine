@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import scipy
 import emcee
@@ -6,6 +7,7 @@ from scipy.linalg import cho_factor, cho_solve
 from hVmFigures.prepro import summary_prepro, reshape_2d_data
 from hVmFigures.config import Nspectra, tem_gam # thermal parameter list (T0, gamma) of 100 simulations
 from hVmFigures.plotting import sampler_plot
+import multiprocessing as mp
 
 
 
@@ -14,11 +16,11 @@ class MCMC:
     Utilize the emcee package to perform MCMC-based inference.
     Nspectra : The variable Nspectra is used to rescale the posterior distribution.
     """
-    def __init__(self, Smock, Smodel_mean):
+    def __init__(self, Smock, Smodel_mean, Npool):
         
         self.minT0, self.maxT0 = 6000.0, 15000.0
         self.mingam, self.maxgam = 1.3, 1.66
-
+        self.Npool = Npool
         self.Length = Smock.shape[-1]
         self.Smock_mean = np.mean(Smock, axis=0)
         if self.Length == 1:                             # This case involves curvature statistic
@@ -71,9 +73,10 @@ class MCMC:
         return -np.inf
     
     def posterior(self, theta):
+        # print("PID:", os.getpid(), flush=True)
         lp = self.prior_range(theta)                          # log-prior
         return lp + self.summary_emulated_loglikelihood_function(theta)
-        
+
         # the number of iteration: niter
         # the number of walkers: nwalkers
         # the initial point is determined by maximum likelihood estimation
@@ -81,8 +84,21 @@ class MCMC:
         ndim = len(initial)
         # The initial positions of each walker are close to the 'initial'
         p0 = [np.array(initial) * (1 + 1e-2 * (np.random.randn(ndim)) ) for i in range(nwalkers)]
-        sampler = emcee.EnsembleSampler(nwalkers, ndim, self.posterior)
-        sampler.run_mcmc(p0, niter, progress=True)
+        print("CPU count:", mp.cpu_count()) 
+        if self.Npool is False:
+            sampler = emcee.EnsembleSampler(nwalkers, ndim, self.posterior)
+            sampler.run_mcmc(p0, niter, progress=True)
+        else:
+            with mp.Pool(16) as pool:
+                print("Pool created")
+                
+                sampler = emcee.EnsembleSampler(
+                    nwalkers,
+                    ndim,
+                    self.posterior,
+                    pool=pool
+                )
+                sampler.run_mcmc(p0, niter, progress=True)
         return sampler
         
     def reduced_chain(self, sampler, thin=1):
@@ -93,18 +109,3 @@ class MCMC:
         reduced_chain.columns = ['$T_0$ [K]', 'γ']
         return reduced_chain
     
-
-def getchain(Smock_mean, Smock_cov, Smodel_mean, plot=True, niter=6000):
-    """
-    To compare summary vectors, you should fix Nspectra to a specific value, e.g., Nspectra=500.
-    MCMC was used to estimate the posterior distribution, assuming a Gaussian likelihood.
-    The covariance was calculated using only mock summary vectors.
-    This function returns a chain
-    """
-    
-    mcmc = MCMC(Smock_mean, Smock_cov, Smodel_mean)
-    
-    sampler =  mcmc.mcmc(niter)
-    if plot is True:
-        sampler_plot(sampler)
-    return mcmc.reduced_chain(sampler,thin=1)
