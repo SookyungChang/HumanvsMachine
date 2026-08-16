@@ -17,7 +17,7 @@ def chain_plot_with_label(ax, chain_list, loc='lower left'):
     for text, chain in zip(leg.get_texts(), chain_list):
         text.set_color(colors.format(chain.color))
 
-def plot_posteriors(chains, chain_info, color_list, alpha_list=alpha_list, sigmas=sigmas):
+def plot_posteriors(chains, chain_info, color_list, alpha_list=alpha_list, sigmas=sigmas, xyfix=True):
     chains_ALL = [
     Chain(
         samples=chains[key],
@@ -35,8 +35,9 @@ def plot_posteriors(chains, chain_info, color_list, alpha_list=alpha_list, sigma
     chain_plot_with_label(axes, chains_ALL, loc='upper right')
     axes.set_xlabel('$T_0$ [K]', fontsize=fontsize)
     axes.set_ylabel('γ', fontsize=fontsize)
-    axes.set_ylim(1.49, 1.66)
-    axes.set_xlim(7200, 14300)
+    if xyfix:
+        axes.set_ylim(1.49, 1.66)
+        axes.set_xlim(7200, 14300)
     return fig, axes
 
 def plot_covariance(mock_joint_sv, labels, positions):
@@ -90,7 +91,7 @@ def plot_FoM_bar(chains, chain_info):
     gap = 0.5
     x = np.arange(len(list_name)) * (1 + gap)
     x_label = np.arange(len(list_name)) + 1
-    axes.bar(x, FoM_list/FoM(chains['sansa']), label=list_name,  color=colors, width=1, alpha=0.8)
+    axes.bar(x, FoM_list/FoM(chains['lyanna']), label=list_name,  color=colors, width=1, alpha=0.8)
     axes.legend(fontsize=fontsize-3)
     axes.set_ylabel('FoM($S$) / FoM(LyαNNA)', fontsize=fontsize)
     axes.set_xlabel('Ranking', fontsize=fontsize)
