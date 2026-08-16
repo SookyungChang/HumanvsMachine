@@ -84,7 +84,7 @@ class MCMC:
         ndim = len(initial)
         # The initial positions of each walker are close to the 'initial'
         p0 = [np.array(initial) * (1 + 1e-2 * (np.random.randn(ndim)) ) for i in range(nwalkers)]
-        print("CPU count:", mp.cpu_count()) 
+        # print("CPU count:", mp.cpu_count()) 
         if self.Npool is False:
             sampler = emcee.EnsembleSampler(nwalkers, ndim, self.posterior)
             sampler.run_mcmc(p0, niter, progress=True)
