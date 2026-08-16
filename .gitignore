@@ -9,9 +9,8 @@ __pycache__/
 .ipynb_checkpoints/
 
 # Large data
-data/
-*.pkl
-*.parquet
+.old_data/*
+data/*
 
 # IDE
 .vscode/
@@ -28,3 +27,12 @@ data/
 
 # Test output
 .test_outputs/
+
+# Quarto
+*.qmd
+*.html
+*.quarto_ipynb
+README_files/*
+
+# Personal
+format_change.py
