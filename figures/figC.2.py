@@ -47,7 +47,7 @@ def plot_posterior_comparison():
 def main(name):
     fig, _ = plot_posterior_comparison()
     fig.savefig(OUTPUT_DIR / name, dpi=dpi, bbox_inches="tight")
-    print(f"Figure saved to {OUTPUT_DIR / name}")
+    # print(f"Figure saved to {OUTPUT_DIR / name}")
 
 if __name__ == "__main__":
     main("FigureC.2.png")
