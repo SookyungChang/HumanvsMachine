@@ -3,18 +3,18 @@ import numpy as np
 from hVmFigures.plotting import plot_covariance
 from hVmFigures.config import DATA_DIR, OUTPUT_DIR, Nspectra, dpi
 
-S_list = ['fps', 'fpdf', 'sm1', 'sm2', 'lyanna']
+S_list = ['fps', 'fpdf', 'sm1', 'sm2']
 
 summaries ={}
 
 for Sn in S_list:
-    with open(DATA_DIR / "summaries" / f"S_{Sn}", "rb") as f:
+    with open(DATA_DIR / "summaries" / f"S_{Sn}.pkl", "rb") as f:
         summaries[Sn] = pickle.load(f)
 
-mock_joint_sv = np.concatenate((summaries['fps'], 
-                                np.repeat(summaries['fpdf25'], 11, axis=-1),
-                                np.repeat(summaries['pure_sm1'], 28, axis=-1),
-                                np.repeat(summaries['pure_sm2'], 7, axis=-1)),axis=1)
+mock_joint_sv = np.concatenate((summaries['fps']['Smock'], 
+                                np.repeat(summaries['fpdf']['Smock'], 11, axis=-1),
+                                np.repeat(summaries['sm1']['Smock'], 28, axis=-1),
+                                np.repeat(summaries['sm2']['Smock'], 7, axis=-1)),axis=1)
 
 positions = [128, 128*3, 128*5, 128*7]
 labels = ['FPS', 'FPDF', 'SM1', 'SM2']
