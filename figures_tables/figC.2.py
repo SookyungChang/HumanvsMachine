@@ -5,18 +5,18 @@ import matplotlib.pyplot as plt
 from hVmFigures.plotting import chain_plot_with_label
 from hVmFigures.config import DATA_DIR, OUTPUT_DIR, Nspectra, dpi, r, fontsize
 
-with open(DATA_DIR / f"ind_chains_Nspectra={Nspectra}.pkl", "rb") as f:
+with open(DATA_DIR / f"ind_chains.pkl", "rb") as f:
     chains = pickle.load(f)
 
-joint_chains = ['fps_fpdf', 'fps_sm', 'fpdf_sm', 'fps_fpdf_sm']
+joint_chains = ['fps_fpdf', 'sm1_sm2', 'fps_sm1_sm2', 'fpdf_sm1_sm2', 'fps_fpdf_sm1_sm2']
 for joint_chain in joint_chains:
-    chains[joint_chain] = pd.read_parquet(DATA_DIR / f"joint_chains_Nspectra={Nspectra}" / f"{joint_chain}.parquet")
+    chains[joint_chain] = pd.read_parquet(DATA_DIR / f"joint_chains" / f"{joint_chain}.parquet")
 
 chain_info = {
     'fps_fpdf': 'FPS+FPDF',
-    'fps_sm': 'FPS+SM',
-    'fpdf_sm': 'FPDF+SM',
-    'sm': 'SM (SM1+SM2)',
+    'fps_sm1_sm2': 'FPS+SM',
+    'fpdf_sm1_sm2': 'FPDF+SM',
+    'sm1_sm2': 'SM (SM1+SM2)',
     'fps': 'FPS',
     'fpdf': 'FPDF',
 }
@@ -33,8 +33,8 @@ def plot_posterior_comparison():
     axes = gs.subplots(sharey=True, sharex=True)
 
     chain_plot_with_label(axes[0], get_chain_list('fpdf', 'fps', 'fps_fpdf'), 'upper right')
-    chain_plot_with_label(axes[1], get_chain_list('fpdf', 'sm', 'fpdf_sm'), 'upper right')
-    chain_plot_with_label(axes[2], get_chain_list('fps', 'sm', 'fps_sm'), 'upper right')
+    chain_plot_with_label(axes[1], get_chain_list('fpdf', 'sm1_sm2', 'fpdf_sm1_sm2'), 'upper right')
+    chain_plot_with_label(axes[2], get_chain_list('fps', 'sm1_sm2', 'fps_sm1_sm2'), 'upper right')
     for i in range(3):
         axes[i].set_ylim(1.49, 1.66)
         axes[i].set_xlim(7200, 14300)
