@@ -10,6 +10,8 @@ __pycache__/
 
 # Large data
 .old_data/*
+data/summaries/*
+data/joint_chains/*
 data/*
 
 # IDE
