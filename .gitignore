@@ -12,7 +12,7 @@ __pycache__/
 .old_data/*
 data/summaries/*
 data/joint_chains/*
-data/*
+data/ind_chains.pkl
 
 # IDE
 .vscode/
