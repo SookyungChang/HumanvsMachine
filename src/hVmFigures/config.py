@@ -9,7 +9,7 @@ DATA_DIR = PROJECT_ROOT / "data"
 OUTPUT_DIR = PROJECT_ROOT / "outputs"
 
 # settings
-Nspectra = 500
+Nspectra = 100
 
 # Plot settings
 alpha_list = [0.05, 0.1, 0.15, 0.3, 0.4]
